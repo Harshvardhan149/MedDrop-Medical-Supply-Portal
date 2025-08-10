@@ -26,9 +26,17 @@ MedDrop™ is a sleek, user-centric web solution designed to simplify the orderi
 
 ## 📱 User Interface Screenshots
 
-| Home (Product Catalog) | Product Details | Delivery Summary | Checkout / Place Order |
-|:---------------------:|:---------------:|:----------------:|:---------------------:|
-| ![1_home](./screenshots/1_home.png) | ![2_details](./screenshots/2_details.png) | ![3_summary](./screenshots/3_summary.png) | ![4_place_order](./screenshots/4_place_order.png) |
+![Homepage](1_home.png)  
+*Main page with product listings and category filter.*
+
+![Product Details](2_details.png)  
+*Detailed view for individual products.*
+
+![Delivery Summary](3_summary.png)  
+*Delivery request summary with filtering and quantity management.*
+
+![Checkout / Place Order](4_place_order.png)  
+*Checkout page for finalizing the order with delivery options.*
 
 ---
 
