@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MedDrop - Medical Supplies</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(15px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body style="
+  margin:0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: url('C:/Users/shaku/OneDrive/Documents/medicine/assets/bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  background-color: #121b40;
+  background-blend-mode: multiply;
+  color: #f5f5f5;
+  min-height: 100vh;
+">
+
+<nav class="navbar navbar-expand-lg" style="
+  position: sticky;
+  top: 0;
+  background: linear-gradient(90deg, #1a237ecc, #3949abcc);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+  padding: 1rem 2rem;
+  z-index: 1000;
+">
+  <div class="container-fluid" style="max-width: 1200px; margin: auto; align-items: center; display: flex; flex-wrap: wrap; gap: 0.75rem;">
+    <a class="navbar-brand fw-bold text-uppercase" href="#" style="
+      font-size: 1.8rem;
+      letter-spacing: 3px;
+      color: #ff6f00;
+      text-shadow: 1px 1px 5px #000000cc;
+      flex-shrink: 0;
+    ">MedDrop</a>
+
+    <a href="summary.html" style="
+      border-radius: 25px;
+      background-color: #3949ab;
+      border: none;
+      padding: 0.5rem 1.5rem;
+      font-weight: 700;
+      color: #f5f5f5;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      white-space: nowrap;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      order: 3;
+    "
+    onmouseover="this.style.backgroundColor='#283593';"
+    onmouseout="this.style.backgroundColor='#3949ab';"
+    >View Summary</a>
+  </div>
+</nav>
+
+<main class="container py-5" style="
+  max-width: 1200px;
+  margin: 3rem auto;
+  background-color: rgba(18, 27, 64, 0.85);
+  border-radius: 15px;
+  box-shadow: 0 0 30px #000000cc;
+  padding: 2rem 3rem;
+  color: #f5f5f5;
+  min-height: 70vh;
+  animation: fadeIn 0.8s ease forwards;
+">
+  <section style="
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+  ">
+    <label for="filterCategory" style="
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      color: #ff6f00;
+      margin: 0;
+      flex-shrink: 0;
+    ">Filter by Category</label>
+    <select
+      id="filterCategory"
+      onchange="applyFilters()"
+      style="
+        background-color: #283593;
+        border: none;
+        color: #f5f5f5;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        min-width: 180px;
+      "
+    >
+      <option value="all" style="color: #121212;">All</option>
+      <option value="firstaid" style="color: #121212;">First Aid</option>
+      <option value="medication" style="color: #121212;">Medication</option>
+      <option value="equipment" style="color: #121212;">Equipment</option>
+    </select>
+
+    <form id="searchForm" onsubmit="event.preventDefault(); applyFilters();" style="
+      display: flex;
+      gap: 0.5rem;
+      margin-left: auto;
+      min-width: 300px;
+      flex-grow: 1;
+      max-width: 400px;
+    ">
+      <input
+        id="searchInput"
+        type="search"
+        placeholder="Search supplies..."
+        aria-label="Search supplies"
+        style="
+          border-radius: 25px;
+          padding: 0.5rem 1.2rem;
+          border: none;
+          flex-grow: 1;
+          font-size: 1rem;
+          outline: none;
+          transition: box-shadow 0.3s ease;
+          color: #121212;
+        "
+        onfocus="this.style.boxShadow='0 0 8px #ff6f00'; this.style.color='#121212';"
+        onblur="this.style.boxShadow='none'; this.style.color='#121212';"
+      />
+      <button
+        type="submit"
+        style="
+          border-radius: 25px;
+          background-color: #ff6f00;
+          border: none;
+          padding: 0.5rem 1.5rem;
+          font-weight: 700;
+          color: #121212;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+          white-space: nowrap;
+        "
+        onmouseover="this.style.backgroundColor='#e65c00';"
+        onmouseout="this.style.backgroundColor='#ff6f00';"
+      >Search</button>
+    </form>
+  </section>
+
+  <section id="product-list" class="row g-4">
+    <!-- Dynamic product cards inserted here -->
+  </section>
+</main>
+
+<script>
+const products = [
+  { id: 'first-aid', name: 'First Aid Kit', price: 25.00, category: 'firstaid', image: 'assets/first-aid.jpg' },
+  { id: 'digital-thermometer', name: 'Digital Thermometer', price: 12.99, category: 'equipment', image: 'assets/digital-thermometer.jpg' },
+  { id: 'face-masks', name: 'Surgical Face Masks', price: 15.50, category: 'firstaid', image: 'assets/face-masks.jpg' },
+  { id: 'hand-sanitizer', name: 'Hand Sanitizer', price: 6.80, category: 'firstaid', image: 'assets/hand-sanitizer.jpg' },
+  { id: 'prescription-pills', name: 'Prescription Pills', price: 35.00, category: 'medication', image: 'assets/prescription-pills.jpg' },
+  { id: 'blood-pressure-monitor', name: 'Blood Pressure Monitor', price: 49.99, category: 'equipment', image: 'assets/blood-pressure-monitor.jpg' },
+  { id: 'glucose-test-kit', name: 'Glucose Test Kit', price: 29.99, category: 'equipment', image: 'assets/glucose-test-kit.jpg' },
+  { id: 'oxygen-cylinder', name: 'Portable Oxygen Cylinder', price: 89.00, category: 'equipment', image: 'assets/oxygen-cylinder.jpg' },
+  { id: 'disposable-gloves', name: 'Disposable Gloves', price: 18.00, category: 'firstaid', image: 'assets/disposable-gloves.jpg' },
+  { id: 'antiseptic-wipes', name: 'Antiseptic Wipes', price: 9.75, category: 'firstaid', image: 'assets/antiseptic-wipes.jpg' },
+  { id: 'cold-compress', name: 'Reusable Cold Compress', price: 7.50, category: 'firstaid', image: 'assets/cold-compress.jpg' },
+  { id: 'medical-tape', name: 'Medical Tape', price: 4.20, category: 'firstaid', image: 'assets/medical-tape.jpg' }
+];
+
+function renderProducts() {
+  const container = document.getElementById('product-list');
+  container.innerHTML = '';
+  products.forEach(product => {
+    const card = document.createElement('div');
+    card.className = 'col-12 col-sm-6 col-md-4 col-lg-3';
+    card.dataset.category = product.category;
+    card.dataset.name = product.name.toLowerCase();
+
+    card.innerHTML = `
+      <div style="
+        background: #283593;
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.5);
+        overflow: hidden;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      "
+      onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 12px 30px rgba(0,0,0,0.8)';"
+      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 15px rgba(0,0,0,0.5)';"
+      >
+        <img src="${product.image}" alt="${product.name}" style="
+          width: 100%;
+          height: 180px;
+          object-fit: cover;
+          border-bottom: 2px solid #ff6f00;
+        " />
+        <div style="
+          padding: 1rem;
+          flex-grow: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        ">
+          <h5 style="
+            color: #ffb74d;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 4px #00000088;
+          ">${product.name}</h5>
+          <p style="
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 3px #00000099;
+          ">$${product.price.toFixed(2)}</p>
+          <a href="details.html?id=${product.id}" style="
+            background-color: #ff6f00;
+            color: #121212;
+            text-align: center;
+            padding: 0.6rem 0;
+            border-radius: 25px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 3px 10px #ff6f00cc;
+            transition: background-color 0.3s ease;
+          "
+          onmouseover="this.style.backgroundColor='#e65c00';"
+          onmouseout="this.style.backgroundColor='#ff6f00';"
+          >View Details</a>
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function applyFilters() {
+  const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+  const selectedCategory = document.getElementById('filterCategory').value;
+  const cards = document.querySelectorAll('#product-list > div');
+  cards.forEach(card => {
+    const matchesCategory = selectedCategory === 'all' || card.dataset.category === selectedCategory;
+    const matchesSearch = card.dataset.name.includes(searchTerm);
+    card.style.display = (matchesCategory && matchesSearch) ? 'block' : 'none';
+  });
+}
+
+window.onload = () => {
+  renderProducts();
+};
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<footer style="
+  background-color: #121b40;
+  color: #f5f5f5;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.7);
+  position: relative;
+  bottom: 0;
+  width: 100%;
+">
+  &copy; 2024 MedDrop™ — Developed by Harsh Vardhan
+</footer>
+
+</body>
+</html>

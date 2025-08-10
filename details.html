@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Product Details | MedDrop</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body style="margin:0; background: url('C:/Users/shaku/OneDrive/Documents/medicine/assets/bg.jpg') no-repeat center center fixed; background-size: cover; background-color: #121b40; background-blend-mode: multiply; color: #f5f5f5; min-height: 100vh; display: flex; justify-content: center; align-items: center;">
+  <div style="position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.7); z-index:-1;"></div>
+
+  <div class="container py-5" style="max-width: 1200px; margin: auto; background-color: rgba(18, 27, 64, 0.85); border-radius: 15px; box-shadow: 0 0 30px #000000cc; padding: 2rem 3rem;">
+    <div class="row">
+      <div class="col-md-6">
+        <img
+          id="product-image"
+          alt="Product Image"
+          style="max-height: 400px; width: 100%; object-fit: contain; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.7);"
+        />
+      </div>
+      <div class="col-md-6" style="color: #f5f5f5; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+        
+        <!-- Header with summary button -->
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 1.5rem;">
+          <a
+            href="summary.html"
+            class="btn"
+            style="border: 2px solid #f5f5f5; color: #f5f5f5; border-radius: 25px; padding: 0.6rem 1.5rem; font-weight: 700; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease;"
+            onmouseover="this.style.backgroundColor='#f5f5f5'; this.style.color='#121212';"
+            onmouseout="this.style.backgroundColor='transparent'; this.style.color='#f5f5f5';"
+          >
+            View Summary
+          </a>
+        </div>
+
+        <div>
+          <h2 id="product-name" style="color: #ffb74d; font-weight: 700; margin-bottom: 0.8rem;">Loading...</h2>
+          
+          <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+            <p id="product-price" style="font-weight: 700; font-size: 1.3rem; color: #ff6f00; margin: 0;"></p>
+            <label for="quantity" style="font-weight: 600;">Quantity:</label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              min="1"
+              value="1"
+              style="width: 60px; border-radius: 8px; border: none; padding: 0.3rem 0.6rem; font-size: 1rem; text-align: center;"
+            />
+          </div>
+          
+          <p id="product-description" style="font-size: 1.1rem; line-height: 1.5; margin-bottom: 2rem;"></p>
+          
+          <button
+            id="add-btn"
+            class="btn"
+            style="background-color: #ff6f00; border: none; border-radius: 25px; color: #121212; padding: 0.6rem 1.5rem; font-weight: 700; cursor: pointer; box-shadow: 0 3px 10px #ff6f00cc; transition: background-color 0.3s ease; display: block; width: 100%; margin-bottom: 1rem;"
+            onmouseover="this.style.backgroundColor='#e65c00';"
+            onmouseout="this.style.backgroundColor='#ff6f00';"
+          >
+            Add to Delivery Request
+          </button>
+
+          <a
+            href="index.html"
+            class="btn"
+            style="border: 2px solid #1976d2; color: #1976d2; border-radius: 25px; padding: 0.6rem 1.5rem; font-weight: 700; text-decoration: none; transition: background-color 0.3s ease, color 0.3s ease; display: block; text-align: center;"
+            onmouseover="this.style.backgroundColor='#1976d2'; this.style.color='#f5f5f5';"
+            onmouseout="this.style.backgroundColor='transparent'; this.style.color='#1976d2';"
+          >
+            Back to Home
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const productData = {
+      "first-aid": {
+        name: "First Aid Kit",
+        price: "$25.00",
+        image: "assets/first-aid.jpg",
+        description: "Includes essential supplies for emergencies. Ideal for home and travel."
+      },
+      "digital-thermometer": {
+        name: "Digital Thermometer",
+        price: "$12.99",
+        image: "assets/digital-thermometer.jpg",
+        description: "Quick and accurate temperature readings for personal health monitoring."
+      },
+      "face-masks": {
+        name: "Surgical Face Masks (Pack of 50)",
+        price: "$15.50",
+        image: "assets/face-masks.jpg",
+        description: "Disposable 3-ply masks designed for comfort and safety."
+      },
+      "hand-sanitizer": {
+        name: "Hand Sanitizer (500ml)",
+        price: "$6.80",
+        image: "assets/hand-sanitizer.jpg",
+        description: "Alcohol-based sanitizer for effective hand hygiene."
+      },
+      "prescription-pills": {
+        name: "Prescription Pills (Generic)",
+        price: "$35.00",
+        image: "assets/prescription-pills.jpg",
+        description: "Generic prescription medication – consult your provider."
+      },
+      "blood-pressure-monitor": {
+        name: "Blood Pressure Monitor",
+        price: "$49.99",
+        image: "assets/blood-pressure-monitor.jpg",
+        description: "Digital monitor for home blood pressure tracking."
+      },
+      "glucose-test-kit": {
+        name: "Glucose Test Kit",
+        price: "$29.99",
+        image: "assets/glucose-test-kit.jpg",
+        description: "Monitor your blood sugar levels effectively and easily."
+      },
+      "oxygen-cylinder": {
+        name: "Portable Oxygen Cylinder",
+        price: "$89.00",
+        image: "assets/oxygen-cylinder.jpg",
+        description: "Lightweight oxygen solution for respiratory support."
+      },
+      "disposable-gloves": {
+        name: "Disposable Gloves (Box of 100)",
+        price: "$18.00",
+        image: "assets/disposable-gloves.jpg",
+        description: "Medical-grade gloves for hygiene and protection."
+      },
+      "antiseptic-wipes": {
+        name: "Antiseptic Wipes (Pack of 50)",
+        price: "$9.75",
+        image: "assets/antiseptic-wipes.jpg",
+        description: "Pre-moistened wipes to clean and disinfect."
+      },
+      "cold-compress": {
+        name: "Reusable Cold Compress",
+        price: "$7.50",
+        image: "assets/cold-compress.jpg",
+        description: "Reusable cold compress for swelling and pain relief."
+      },
+      "medical-tape": {
+        name: "Hypoallergenic Medical Tape",
+        price: "$4.20",
+        image: "assets/medical-tape.jpg",
+        description: "Secure bandages with breathable, hypoallergenic tape."
+      }
+    };
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const productId = queryParams.get("id");
+
+    const product = productData[productId];
+
+    if (product) {
+      document.getElementById("product-name").textContent = product.name;
+      document.getElementById("product-price").textContent = product.price;
+      const imgEl = document.getElementById("product-image");
+      imgEl.src = product.image;
+      imgEl.alt = product.name;
+      document.getElementById("product-description").textContent = product.description;
+
+      document.getElementById("add-btn").addEventListener("click", () => {
+        const quantity = Math.max(1, parseInt(document.getElementById("quantity").value, 10) || 1);
+        let items = JSON.parse(localStorage.getItem("deliveryItems")) || [];
+        const existingItemIndex = items.findIndex(item => item.id === productId);
+
+        if (existingItemIndex !== -1) {
+          // Update quantity
+          items[existingItemIndex].quantity += quantity;
+        } else {
+          items.push({ id: productId, quantity, ...product });
+        }
+        localStorage.setItem("deliveryItems", JSON.stringify(items));
+        alert("Item added to delivery request.");
+      });
+    } else {
+      document.querySelector(".container").innerHTML = "<h3 style='color:#d32f2f;'>Product not found.</h3>";
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
